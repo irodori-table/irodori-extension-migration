@@ -1,0 +1,27 @@
+[package]
+name = "irodori-extension-migration"
+version = "0.1.0"
+publish = false
+edition = "2021"
+license = "0BSD"
+description = "Migration Studio: plan a table migration between database engines, from Irodori Table."
+repository = "https://github.com/irodori-table/irodori-extension-migration"
+readme = "README.md"
+
+[lib]
+name = "irodori_extension_migration"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+irodori-connector-abi = { git = "https://github.com/irodori-table/irodori-kit", tag = "v0.9.6" }
+irodori-migration = "0.4"
+serde_json = "1"
+
+[profile.dev.package."*"]
+debug = 0
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+panic = "abort"

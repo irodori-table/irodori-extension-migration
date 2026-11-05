@@ -1,0 +1,366 @@
+{
+  "$schema": "https://irodori.dev/schemas/irodori.extension.schema.json",
+  "manifestVersion": 1,
+  "id": "irodori.migration",
+  "name": "Migration Studio",
+  "version": "0.1.0",
+  "publisher": "irodori",
+  "description": "Plan a table migration between database engines: source and target SQL, a data diff, and a runbook.",
+  "license": "MIT OR 0BSD",
+  "repository": "https://github.com/irodori-table/irodori-extension-migration",
+  "apiVersion": "0.1",
+  "runtime": "native",
+  "entry": "dist/native",
+  "permissions": [
+    "native",
+    "tools"
+  ],
+  "contributes": {
+    "tools": [
+      {
+        "id": "migration.studio",
+        "title": {
+          "en": "Migration Studio",
+          "ja": "Migration Studio"
+        },
+        "shortcut": "Mod+Shift+M",
+        "form": {
+          "sections": [
+            {
+              "columns": 2,
+              "fields": [
+                {
+                  "id": "sourceEngine",
+                  "label": {
+                    "en": "Source",
+                    "ja": "ソース"
+                  },
+                  "type": "select",
+                  "default": "hive",
+                  "options": [
+                    {
+                      "value": "hive",
+                      "label": {
+                        "en": "Apache Hive"
+                      }
+                    },
+                    {
+                      "value": "snowflake",
+                      "label": {
+                        "en": "Snowflake"
+                      }
+                    },
+                    {
+                      "value": "duckdb",
+                      "label": {
+                        "en": "DuckDB / DuckDB-Wasm"
+                      }
+                    },
+                    {
+                      "value": "iceberg",
+                      "label": {
+                        "en": "Apache Iceberg REST"
+                      }
+                    },
+                    {
+                      "value": "s3Tables",
+                      "label": {
+                        "en": "AWS S3 Tables"
+                      }
+                    },
+                    {
+                      "value": "postgres",
+                      "label": {
+                        "en": "PostgreSQL"
+                      }
+                    },
+                    {
+                      "value": "oracle",
+                      "label": {
+                        "en": "Oracle"
+                      }
+                    },
+                    {
+                      "value": "mysql",
+                      "label": {
+                        "en": "MySQL"
+                      }
+                    },
+                    {
+                      "value": "mariadb",
+                      "label": {
+                        "en": "MariaDB"
+                      }
+                    },
+                    {
+                      "value": "redshift",
+                      "label": {
+                        "en": "Redshift"
+                      }
+                    },
+                    {
+                      "value": "databricks",
+                      "label": {
+                        "en": "Databricks / Spark SQL"
+                      }
+                    },
+                    {
+                      "value": "trinoPresto",
+                      "label": {
+                        "en": "Trino / Presto"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "sourceVersion",
+                  "label": {
+                    "en": "Source version",
+                    "ja": "ソースバージョン"
+                  },
+                  "type": "string",
+                  "default": "Hive 2/3"
+                },
+                {
+                  "id": "targetEngine",
+                  "label": {
+                    "en": "Target",
+                    "ja": "ターゲット"
+                  },
+                  "type": "select",
+                  "default": "snowflake",
+                  "options": [
+                    {
+                      "value": "hive",
+                      "label": {
+                        "en": "Apache Hive"
+                      }
+                    },
+                    {
+                      "value": "snowflake",
+                      "label": {
+                        "en": "Snowflake"
+                      }
+                    },
+                    {
+                      "value": "duckdb",
+                      "label": {
+                        "en": "DuckDB / DuckDB-Wasm"
+                      }
+                    },
+                    {
+                      "value": "iceberg",
+                      "label": {
+                        "en": "Apache Iceberg REST"
+                      }
+                    },
+                    {
+                      "value": "s3Tables",
+                      "label": {
+                        "en": "AWS S3 Tables"
+                      }
+                    },
+                    {
+                      "value": "postgres",
+                      "label": {
+                        "en": "PostgreSQL"
+                      }
+                    },
+                    {
+                      "value": "oracle",
+                      "label": {
+                        "en": "Oracle"
+                      }
+                    },
+                    {
+                      "value": "mysql",
+                      "label": {
+                        "en": "MySQL"
+                      }
+                    },
+                    {
+                      "value": "mariadb",
+                      "label": {
+                        "en": "MariaDB"
+                      }
+                    },
+                    {
+                      "value": "redshift",
+                      "label": {
+                        "en": "Redshift"
+                      }
+                    },
+                    {
+                      "value": "databricks",
+                      "label": {
+                        "en": "Databricks / Spark SQL"
+                      }
+                    },
+                    {
+                      "value": "trinoPresto",
+                      "label": {
+                        "en": "Trino / Presto"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "targetVersion",
+                  "label": {
+                    "en": "Target version",
+                    "ja": "ターゲットバージョン"
+                  },
+                  "type": "string",
+                  "default": "Snowflake"
+                },
+                {
+                  "id": "sourceTable",
+                  "label": {
+                    "en": "Source table",
+                    "ja": "ソーステーブル"
+                  },
+                  "type": "string",
+                  "default": "legacy.orders"
+                },
+                {
+                  "id": "targetTable",
+                  "label": {
+                    "en": "Target table",
+                    "ja": "ターゲットテーブル"
+                  },
+                  "type": "string",
+                  "default": "analytics.orders"
+                },
+                {
+                  "id": "keyColumns",
+                  "label": {
+                    "en": "Key columns",
+                    "ja": "キー列"
+                  },
+                  "type": "lines",
+                  "default": "order_id\nline_id"
+                },
+                {
+                  "id": "compareColumns",
+                  "label": {
+                    "en": "Compare columns",
+                    "ja": "比較列"
+                  },
+                  "type": "lines",
+                  "default": "order_id\nline_id\ncustomer_id\nstatus\namount\nupdated_at"
+                }
+              ]
+            },
+            {
+              "columns": 3,
+              "fields": [
+                {
+                  "id": "partitionColumn",
+                  "label": {
+                    "en": "Partition column",
+                    "ja": "パーティション列"
+                  },
+                  "type": "string",
+                  "default": "sales_dt"
+                },
+                {
+                  "id": "partitionPredicate",
+                  "label": {
+                    "en": "Predicate",
+                    "ja": "述語"
+                  },
+                  "type": "string",
+                  "default": "sales_dt >= '2026-01-01'"
+                },
+                {
+                  "id": "exportFormat",
+                  "label": {
+                    "en": "Export",
+                    "ja": "エクスポート"
+                  },
+                  "type": "select",
+                  "default": "parquet",
+                  "options": [
+                    {
+                      "value": "parquet",
+                      "label": {
+                        "en": "Parquet"
+                      }
+                    },
+                    {
+                      "value": "csv",
+                      "label": {
+                        "en": "CSV"
+                      }
+                    },
+                    {
+                      "value": "tsv",
+                      "label": {
+                        "en": "TSV"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "batchSize",
+                  "label": {
+                    "en": "Batch rows",
+                    "ja": "バッチ行数"
+                  },
+                  "type": "number",
+                  "default": 5000000,
+                  "min": 1000,
+                  "max": 100000000,
+                  "step": 1000
+                },
+                {
+                  "id": "diffLimit",
+                  "label": {
+                    "en": "Diff limit",
+                    "ja": "差分上限"
+                  },
+                  "type": "number",
+                  "default": 1000,
+                  "min": 10,
+                  "max": 100000,
+                  "step": 100
+                },
+                {
+                  "id": "delimiter",
+                  "label": {
+                    "en": "Delimiter",
+                    "ja": "区切り文字"
+                  },
+                  "type": "string",
+                  "default": "|#|"
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "normalizeWhitespace",
+                  "label": {
+                    "en": "Normalize whitespace",
+                    "ja": "空白を正規化"
+                  },
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "id": "normalizeCase",
+                  "label": {
+                    "en": "Normalize case",
+                    "ja": "大文字小文字を正規化"
+                  },
+                  "type": "boolean",
+                  "default": false
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "visibility": "public",
+  "extensionId": "irodori.migration",
+  "runtime": {
+    "driverLinked": true
+  }
+}
